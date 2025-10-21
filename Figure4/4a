@@ -1,1 +1,31 @@
-a
+# ============================================================
+# Title:    ATAC-seq TSS Heatmap
+# System:   Linux Ubuntu 22.04
+# Purpose:  Generate TSS-centered heatmaps using deepTools
+# ============================================================
+
+# ---------- [Set working directory] ----------
+cd /path/to/workdir
+
+# ---------- [Compute matrix for NC vs KO] ----------
+computeMatrix reference-point \
+    -S ATAC1_rpkm.bw ATAC2_rpkm.bw \
+    -R /path/to/hg38.refGene.gtf \
+    --referencePoint TSS \
+    -b 2000 -a 2000 \
+    --binSize 50 \
+    --skipZeros \
+    -o TSS2.mat.gz \
+    -p 8
+
+# ---------- [Plot heatmap] ----------
+plotHeatmap \
+    -m TSS2.mat.gz \
+    --samplesLabel "NC" "KO" \
+    -o ATAC_KO.pdf \
+    --colorList 'white,#F9E07D,#E53935' \
+    --yAxisLabel 'RPKM' \
+    --sortUsing sum \
+    --missingDataColor 1 \
+    --heatmapWidth 3.5 \
+    --heatmapHeight 12
