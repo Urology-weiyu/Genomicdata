@@ -44,3 +44,10 @@ gseaNb(object = gsea_results,
        ht.legend = FALSE,
        rmPrefix = FALSE)
 dev.off()
+
+# ---------- [Session Info Summary] ----------
+# R version: 4.3.1 (2023-06-16)
+# Platform:  x86_64-w64-mingw32/x64 (Windows 11)
+# Key packages: clusterProfiler_4.10.0 pathview_1.42.0
+# enrichplot_1.22.0 msigdbr_7.5.1 heatmap3_1.1.9
+# GseaVis_0.1.0 
