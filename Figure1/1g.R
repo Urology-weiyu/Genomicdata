@@ -22,3 +22,9 @@ diff_res <- diff_analysis(
 res <- diff_res$deg_limma
 # ---------- [Export Results] ----------
 write.csv(res, "Limma_KOvsCon.csv", row.names = FALSE)
+
+
+# ---------- [Session Info Summary] ----------
+# R version: 4.3.1 (2023-06-16)
+# Platform:  x86_64-w64-mingw32/x64 (Windows 11)
+# Key packages: easyTCGA_0.0.1.6000
