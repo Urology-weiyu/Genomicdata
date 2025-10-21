@@ -94,3 +94,9 @@ ggplot(tmp, aes(x = Disease_State, y = Cupro, fill = Disease_State)) +
     step_increase = 0.15
   )
 ggsave('FigS1a.pdf',width = 2,height = 3.4)
+
+# ---------- [Session Info Summary] ----------
+# R version: 4.3.1 (2023-06-16)
+# Platform:  x86_64-w64-mingw32/x64 (Windows 11)
+# Key packages: clusterProfiler_4.10.0 GseaVis_0.1.0
+# clusterProfiler_4.10.0 GSVA_1.50.0
