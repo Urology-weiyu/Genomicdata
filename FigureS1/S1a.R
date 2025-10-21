@@ -33,7 +33,15 @@ group <- es.max %>% t() %>% as.data.frame()
 group$id <- rownames(group)
 colnames(group) <- c('Cupro', 'x')
 
+
+
 # ---------- [Subset samples by Disease_State] ----------
+cli=fread('cli.csv')
+cli=cli[,c(1,2,12)]
+colnames(cli)=c('x','Patient','Disease_State')
+tmp=merge(group,cli,by='x')
+tmp$Disease_State=gsub('Stage: ','',tmp$Disease_State)
+
 tmp <- group
 crc <- subset(tmp, Disease_State == 'CRC')
 fap <- subset(tmp, Disease_State == 'FAP')
