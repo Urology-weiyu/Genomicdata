@@ -1,0 +1,46 @@
+# ============================================================
+# Title:    RNA-seq Preprocessing, Alignment, and Counting
+# Author:   Weiyu Kong
+# System:   Linux Ubuntu
+# Purpose:  Trim raw FASTQ reads, align with STAR, and generate
+#           gene counts using featureCounts.
+# ============================================================
+
+# ---------- [User-defined Paths] ----------
+RAW_DIR="/path/to/rawfastq"
+OUT_DIR="/path/to/processed"
+GENOME_DIR="/path/to/STARsoloref"
+GTF="/path/to/refdata-gex-GRCh38-2024-A/genes/genes.gtf.gz"
+THREADS=8
+
+# ---------- [Trim Raw Reads] ----------
+for R1 in "$RAW_DIR"/*R1.raw.fastq.gz; do
+    R2="${R1/R1.raw.fastq.gz/R2.raw.fastq.gz}"
+    SAMPLE=$(basename "$R1" | cut -d'.' -f1)
+
+    echo "Trimming $SAMPLE..."
+    /path/to/Software/TrimGalore-0.6.10/trim_galore \
+        --phred33 -q 20 --cores $THREADS --stringency 3 \
+        --fastqc --paired -o "$OUT_DIR/clean_fq" "$R1" "$R2"
+done
+
+# ---------- [STAR Alignment] ----------
+namelist=()
+for name in "${namelist[@]}"; do
+    echo "Aligning $name..."
+    /path/to/STAR \
+        --genomeDir "$GENOME_DIR" \
+        --runThreadN $THREADS \
+        --readFilesIn "$OUT_DIR/clean_fq/${name}_val_1.fq.gz" "$OUT_DIR/clean_fq/${name}_val_2.fq.gz" \
+        --readFilesCommand zcat \
+        --outFileNamePrefix "$OUT_DIR/aligned/${name}_" \
+        --outSAMtype BAM SortedByCoordinate \
+        --outBAMsortingThreadN $THREADS
+done
+
+# ---------- [Generate Gene Counts] ----------
+BAM_FILES=$(find "$OUT_DIR/aligned" -name "*Aligned.sortedByCoord.out.bam" | sort)
+featureCounts -p -t exon -T $THREADS -g gene_id \
+    -a "$GTF" \
+    -o "$OUT_DIR/final_counts.txt" \
+    $BAM_FILES
