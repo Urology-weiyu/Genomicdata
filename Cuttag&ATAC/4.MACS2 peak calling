@@ -8,7 +8,7 @@ bampt="/path/to/bam_files"
 outdir=""
 mkdir -p "$outdir"
 
-samples=(SMCHD1_NC)
+samples=('SMCHD1_NC')
 for name in "${samples[@]}"; do
     echo "Calling peaks for $name ..."
     macs2 callpeak \
