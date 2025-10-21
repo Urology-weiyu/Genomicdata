@@ -1,0 +1,49 @@
+# ============================================================
+# Title:    ATAC Alignment and Processing Pipeline
+# Author:   Weiyu Kong
+# System:   Ubuntu 22.04.1
+# ============================================================
+
+THREADS=8
+REF_HUMAN="/path/to/bowtie2HumanCh38/bowtie"
+ATAClist=()
+
+# ========== [Main Processing Loop] ==========
+for SAMPLE in "${ATAClist[@]}"; do
+  echo "Processing sample ${SAMPLE}..."
+
+  # Step 1: Trim reads
+  trim_galore --cores ${THREADS} -q 25 --phred33 --fastqc \
+    --paired ${SAMPLE}_R1.fq.gz ${SAMPLE}_R2.fq.gz --gzip
+
+  # Step 2: Alignment to human reference (hg38)
+  bowtie2 --no-mixed --no-discordant --maxins 1000 -p ${THREADS} \
+    -x ${REF_HUMAN} \
+    -1 ${SAMPLE}_R1_val_1.fq.gz -2 ${SAMPLE}_R2_val_2.fq.gz \
+    -S ${SAMPLE}_bowtie2.sam &> ${SAMPLE}_bowtie2.log
+
+  # Step 3: Convert SAM to BAM, filter, sort, and index
+  samtools view -@ ${THREADS} -bS -q 10 ${SAMPLE}_bowtie2.sam \
+    chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 \
+    chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY \
+    | samtools sort -@ ${THREADS} -o ${SAMPLE}_q10.bam -
+  samtools index -@ ${THREADS} ${SAMPLE}_q10.bam
+
+  # Step 4: Add read groups and remove duplicates
+  picard AddOrReplaceReadGroups \
+    I=${SAMPLE}_q10.bam O=${SAMPLE}_RG.bam \
+    RGID=${SAMPLE} RGLB=lib1 RGPL=ILLUMINA RGPU=unit1 RGSM=${SAMPLE}
+
+  picard MarkDuplicates \
+    I=${SAMPLE}_RG.bam O=${SAMPLE}_dedup.bam \
+    REMOVE_DUPLICATES=true \
+    M=${SAMPLE}_dup_metrics.txt
+  samtools index -@ ${THREADS} ${SAMPLE}_dedup.bam
+
+  # Step 5: Generate normalized coverage file (RPKM)
+  bamCoverage -b ${SAMPLE}_dedup.bam -o ${SAMPLE}_rpkm.bw \
+    --normalizeUsing RPKM --smoothLength 400 \
+    --extendReads 200 -bs 20 --centerReads \
+    --numberOfProcessors ${THREADS}
+
+done
