@@ -51,3 +51,8 @@ colnames(results)[1] <- 'SYMBOL'
 tmp <- merge(tmp, results, by = 'SYMBOL')
 
 write.table(tmp, file = filen, sep = "\t", quote = FALSE, row.names = FALSE)
+
+# ---------- [Session Info Summary] ----------
+# R version: 4.3.1 (2023-06-16)
+# Platform:  x86_64-w64-mingw32/x64 (Windows 11)
+# Key packages: biomaRt_2.58.2 TxDb.Hsapiens.UCSC.hg38.knownGene_3.18.0 ChIPseeker_1.38.0
