@@ -1,7 +1,6 @@
 #!/bin/bash
 # ============================================================
 # Title:    CUT&Tag Alignment and Preprocessing Pipeline
-# Author:   Weiyu Kong
 # System:   Ubuntu 22.04.1
 # Purpose:  Align CUT&Tag paired-end reads to human (hg38) and
 #            spike-in (gamma) reference genomes, generate
