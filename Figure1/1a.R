@@ -2,7 +2,7 @@
 # Run on R 
 
 setwd("/path/to/workdir")
-rt <- read.csv("联合用药.csv")
+rt <- read.csv("drug.csv")
 
 # Load required libraries
 library(ggplot2)
