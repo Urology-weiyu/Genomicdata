@@ -85,4 +85,4 @@ ggplot(tmp, aes(x = Disease_State, y = Cupro, fill = Disease_State)) +
     vjust = -0.5,
     step_increase = 0.15
   )
-ggsave('Fig1a.pdf',width = 2,height = 3.4)
+ggsave('FigS1a.pdf',width = 2,height = 3.4)
