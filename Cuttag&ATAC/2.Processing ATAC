@@ -44,6 +44,7 @@ for SAMPLE in "${ATAClist[@]}"; do
   bamCoverage -b ${SAMPLE}_dedup.bam -o ${SAMPLE}_rpkm.bw \
     --normalizeUsing RPKM --smoothLength 400 \
     --extendReads 200 -bs 20 --centerReads \
+    -bl /path/to/hg38-blacklist.v2.bed \
     --numberOfProcessors ${THREADS}
 
 done
