@@ -8,7 +8,7 @@
 # ---------- [User-defined Paths] ----------
 RAW_DIR="/path/to/rawfastq"
 OUT_DIR="/path/to/processed"
-GENOME_DIR="/path/to/STARsoloref"
+GENOME_DIR="/path/to/hg38ref"
 GTF="/path/to/refdata-gex-GRCh38-2024-A/genes/genes.gtf.gz"
 THREADS=8
 
