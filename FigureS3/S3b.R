@@ -1,5 +1,5 @@
 # ============================================================
-# Title:    GO Enrichment Analysis of Upregulated Genes in KO1 vs Control
+# Title:    GO Enrichment Analysis of Upregulated Genes in KO vs Control
 # Purpose:  Perform GO enrichment for significantly upregulated DEGs
 # ============================================================
 
