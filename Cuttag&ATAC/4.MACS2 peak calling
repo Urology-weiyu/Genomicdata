@@ -1,0 +1,20 @@
+# ============================================================
+# Title:    MACS2 Peak Calling for CUT&Tag Samples
+# Purpose:  Identify enriched peaks from BAM files using MACS2
+# ============================================================
+conda activate macs2_env
+# ---------- [MACS2 Peak Calling] ----------
+bampt="/path/to/bam_files"
+outdir=""
+mkdir -p "$outdir"
+
+samples=(SMCHD1_NC)
+for name in "${samples[@]}"; do
+    echo "Calling peaks for $name ..."
+    macs2 callpeak \
+        -t "${bampt}/${name}_bowtie2.mapped.bam" \
+        -p 5e-3 \
+        -f BAMPE \
+        --keep-dup auto \
+        -n "$name" 
+done
