@@ -8,11 +8,9 @@ setwd("/path/to/workdir")
 # ---------- [Read and filter DEGs] ----------
 smchd1 <- read.csv("Limma_KOvsCon_SMCHD1_WithTPM.csv")
 smchd1 <- subset(smchd1, adj.P.Val < 0.05 & logFC > 1)
-write.csv(smchd1, "KOvsCon_SMCHD1_volcano_genes.csv", row.names = FALSE)
 
 prmt5 <- read.csv("Limma_KOvsCon_PRMT5_WithTPM.csv")
 prmt5 <- subset(prmt5, adj.P.Val < 0.05 & logFC > 1)
-write.csv(prmt5, "KOvsCon_PRMT5_volcano_genes.csv", row.names = FALSE)
 
 # ---------- [Read CUT&Tag peaks] ----------
 bed <- read.csv("cuttag.csv")
