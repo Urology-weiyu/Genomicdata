@@ -1,8 +1,7 @@
 # ============================================================
 # Title:    GSEA Analysis and Visualization for KO vs Control
 # System:   R 4.3.1
-# Purpose:  Perform GSEA using logFC-ranked genes and plot 
-#           specific pathways (e.g., Cuproptosis Promoting)
+# Purpose:  Perform GSEA using logFC-ranked genes
 # ============================================================
 
 
@@ -16,7 +15,7 @@ library(GseaVis)
 R.utils::setOption("clusterProfiler.download.method", 'auto')
 
 # ---------- [Prepare gene list for GSEA] ----------
-markers_for_gsea <- read.csv('Limma_KOvsCon_WithTPM.csv')
+markers_for_gsea <- read.csv('Limma_KOvsCon_PRMT5.csv')
 gene_list <- markers_for_gsea$logFC
 names(gene_list) <- markers_for_gsea$genesymbol
 gene_list <- sort(gene_list, decreasing = TRUE)
@@ -31,7 +30,7 @@ gsea_results
 # Save results
 write_csv(as.data.frame(gsea_results), "gsea_results.csv")
 
-# ---------- [Visualize specific gene set] ----------
+# ---------- [Visualization] ----------
 pdf('Cuproptosis_Promoting_GSEA.pdf', width = 3, height = 3)
 gseaNb(object = gsea_results,
        geneSetID = 'Cuproptosis Promoting',
