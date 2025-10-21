@@ -1,0 +1,46 @@
+# ============================================================
+# Title:    CUT&Tag Heatmap
+# System:   Linux Ubuntu 22.04
+# Purpose:  Generate heatmap and average profile using deepTools(version 3.5.1)
+# ============================================================
+
+# Set working directory
+cd /path/to/workdir
+
+# ---------- [Compute matrix for heatmap] ----------
+computeMatrix scale-regions \
+    -S Sample1_Normalized.bw Sample2_Normalized.bw \
+    -R /path/to/hg38.refGene.gtf \
+    -a 3000 -b 3000 -bs 50 \
+    --regionBodyLength 5000 \
+    --missingDataAsZero \
+    -o Summary.mat.gz \
+    -p 8
+
+# ---------- [Plot heatmap] ----------
+plotHeatmap \
+    -m Summary.mat.gz \
+    -o heatmap.pdf \
+    --colorList 'white,#DD2C00' 'white,#DD2C00' \
+    --yAxisLabel '' \
+    --sortUsing sum \
+    --missingDataColor 1 \
+    --samplesLabel 'NC' 'KO' \
+    --heatmapWidth 2.5 \
+    --heatmapHeight 6 \
+    --regionsLabel 'hg38' \
+    --whatToShow "heatmap and colorbar" \
+    --labelRotation 90
+
+# ---------- [Plot average profile] ----------
+plotProfile \
+    -m Summary.mat.gz \
+    --samplesLabel 'NC' 'KO' \
+    --perGroup \
+    --colors '#DD2C00' '#FF9E80' \
+    -o summary.pdf \
+    --plotWidth 6 \
+    --plotHeight 5 \
+    --startLabel "Start" \
+    --endLabel "End" \
+    --regionsLabel ''
