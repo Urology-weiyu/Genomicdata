@@ -14,8 +14,8 @@ WORKDIR="/path/to/rawdata"
 # Bowtie2 genome index (hg38 human reference)
 REF_HUMAN="/path/to/reference/hg38_index"
 
-# Bowtie2 spike-in index (gamma reference)
-REF_SPIKEIN="/path/to/reference/gamma_index"
+# Bowtie2 spike-in index
+REF_SPIKEIN="/path/to/reference/spike-in_index"
 
 # Number of threads for parallel processing
 THREADS=8
