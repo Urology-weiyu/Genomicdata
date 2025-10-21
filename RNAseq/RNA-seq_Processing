@@ -1,6 +1,5 @@
 # ============================================================
 # Title:    RNA-seq Preprocessing, Alignment, and Counting
-# Author:   Weiyu Kong
 # System:   Linux Ubuntu
 # Purpose:  Trim raw FASTQ reads, align with STAR, and generate
 #           gene counts using featureCounts.
