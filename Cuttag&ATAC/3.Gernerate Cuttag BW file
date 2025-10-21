@@ -1,0 +1,15 @@
+BLACKLIST="/path/to/hg38-blacklist.v2.bed"
+SAMPLE="sample_id"
+
+# NOAR: Number of reads aligned concordantly exactly 1 time in spike-in alignment
+  sf=$(echo "scale=6; 100000 / NOAR" | bc)
+
+# Generate spike-in normalized coverage
+  bamCoverage \
+    -b ${SAMPLE}_dedup.bam \
+    -o ${SAMPLE}_Normalized.bw \
+    --centerReads --smoothLength 400 --extendReads 200 -bs 20 \
+    --ignoreDuplicates --minMappingQuality 30 \
+    -bl ${BLACKLIST} \
+    --numberOfProcessors 8 \
+    --scaleFactor ${sf}
