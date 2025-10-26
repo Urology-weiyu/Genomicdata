@@ -7,7 +7,7 @@ SAMPLE="sample_id"
 
 # Generate spike-in normalized coverage
   bamCoverage \
-    -b ${SAMPLE}_dedup.bam \
+    -b ${SAMPLE}_clean.bam \
     -o ${SAMPLE}_Normalized.bw \
     --centerReads --smoothLength 400 --extendReads 200 -bs 20 \
     --ignoreDuplicates --minMappingQuality 30 \
