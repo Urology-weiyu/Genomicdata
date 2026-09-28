@@ -1,7 +1,7 @@
 # ============================================================
 # Title:    Annotate SMCHD1 CUT&Tag Peaks
 # Purpose:  Perform peak annotation and generate annotation pie chart
-# ============================================================
+# ============================================================ 
 
 setwd('/path/to/workdir')
 
