@@ -15,6 +15,6 @@ for name in "${samples[@]}"; do
         -t "${bampt}/${name}_bowtie2.mapped.bam" \
         -p 5e-3 \
         -f BAMPE \
-        --keep-dup auto \
+        --keep-dup all \
         -n "$name" 
 done
