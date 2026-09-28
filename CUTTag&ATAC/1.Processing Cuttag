@@ -5,7 +5,7 @@
 # Purpose:  Align CUT&Tag paired-end reads to human (hg38) and
 #            spike-in (gamma) reference genomes, generate
 #            cleaned BAM files for downstream analysis.
-# ============================================================
+# ============================================================ 
 
 # Root directory containing raw FASTQ files
 WORKDIR="/path/to/rawdata"
